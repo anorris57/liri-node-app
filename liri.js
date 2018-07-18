@@ -21,7 +21,7 @@ var titleName = "";
       titleName += nodeArgs[i];
     }
   }
-
+/* 
 if (operand === "my-tweets") {
   tweetInfo();
 } else if (operand === "spotify-this-song") {
@@ -30,8 +30,22 @@ if (operand === "my-tweets") {
   movieInfo(titleName);
 } else if (operand === "do-what-it-says"){
   readInfo();
+} */
+switch(operand){
+  case "my-tweets":
+  tweetInfo();
+  break;
+  case "spotify-this-song":
+  spotifyInfo(titleName);
+  break;
+  case "movie-this":
+  movieInfo(titleName);
+  break;
+  case "do-what-it-says":
+  readInfo();
+  default: 
+  console.log("Error. None Work");
 }
-
 
 function tweetInfo(){
   var params = {screen_name: '@NellWinnifred'};
@@ -49,6 +63,8 @@ function tweetInfo(){
 }
 
  function spotifyInfo(song) {
+   console.log(song);
+   if(song) {
   spotify.search({ type: 'track', query: song}, function(error, data){
   if(!error){
     for(var i = 0; i < data.tracks.items.length; i++){
@@ -66,6 +82,7 @@ function tweetInfo(){
     console.log('Error occurred.');
   }
 });
+}
 }  
 
 function movieInfo(movieName) {
