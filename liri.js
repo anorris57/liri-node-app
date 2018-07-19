@@ -21,16 +21,7 @@ var titleName = "";
       titleName += nodeArgs[i];
     }
   }
-/* 
-if (operand === "my-tweets") {
-  tweetInfo();
-} else if (operand === "spotify-this-song") {
-  spotifyInfo(titleName);
-} else if (operand === "movie-this") {
-  movieInfo(titleName);
-} else if (operand === "do-what-it-says"){
-  readInfo();
-} */
+
 switch(operand){
   case "my-tweets":
   tweetInfo();
@@ -43,8 +34,9 @@ switch(operand){
   break;
   case "do-what-it-says":
   readInfo();
+  break;
   default: 
-  console.log("Error. None Work");
+  console.log("Error. None Worked");
 }
 
 function tweetInfo(){
@@ -55,6 +47,12 @@ function tweetInfo(){
      var date = tweets[i].created_at;
      console.log(date)
      console.log(tweets[i].text);
+  
+     fs.appendFile("log.txt", tweets[i].text, function(err) {
+      if (err) {
+        console.log(err);
+      }
+    });
    }
   } else {
     console.log('Error occurred');
@@ -77,9 +75,14 @@ function tweetInfo(){
       console.log("Preview URL: " + songData.preview_url);
       //album name
       console.log("Album: " + songData.album.name);
+      fs.appendFile("log.txt", songData.artists[0].name, function(err) {
+       if (err) {
+         console.log(err);
+       }
+     });
     }
   } else {
-    console.log('Error occurred.');
+    console.log('Error occurred.1');
   }
 });
 }
@@ -97,12 +100,19 @@ function movieInfo(movieName) {
     console.log("Release Year: " + JSON.parse(body).Year);
     console.log("Rated: " + JSON.parse(body).Rated);
     console.log("Ratings: " + JSON.parse(body).Ratings[1].Value);
-    console.log("Country Produced: " + JSON.parse(body).countryproduced);
+    console.log("Country Produced: " + JSON.parse(body).Country);
     console.log("Language: " + JSON.parse(body).Language);
     console.log("Plot: " + JSON.parse(body).Plot);
     console.log("Actors: " + JSON.parse(body).Actors);
+
+    fs.appendFile("log.txt", JSON.parse(body).Title +" "+ JSON.parse(body).Plot, function(err) {
+     if (err) {
+       console.log(err);
+     }
+   });
+    
   } else {
-    console.log('Error occurred.');
+    console.log('Error occurred.2');
   }
 }); 
 }
@@ -115,6 +125,11 @@ function readInfo() {
     // Then split it by commas (to make it more readable)
     var dataArr = data.split(",");
     spotifyInfo(dataArr[1]);
+    fs.appendFile("log.txt", spotifyInfo(dataArr[1]), function(err) {
+     if (err) {
+       console.log(err);
+     }
+   });
   });
 }
 
