@@ -27,10 +27,18 @@ switch(operand){
   tweetInfo();
   break;
   case "spotify-this-song":
+  if(Boolean(titleName) === true){
   spotifyInfo(titleName);
+  } else {
+    spotifyInfo("I Want it That Way");  
+  }
   break;
   case "movie-this":
-  movieInfo(titleName);
+  if(Boolean(titleName) === true){
+    movieInfo(titleName);
+    } else {
+      movieInfo("Mr. Nobody");  
+    }
   break;
   case "do-what-it-says":
   readInfo();
